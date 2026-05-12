@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  img { width: 300px; height: auto; }
+  .item { display: inline-block; margin: 10px; text-align: center; }
+</style>
+</head>
+<body>
+<script>
+  const imgs = [
+    'IMG_6394.jpg', 'IMG_6396.jpg', 'IMG_6397.jpg', 'IMG_6398.jpg', 'IMG_6399.jpg',
+    'IMG_6400.jpg', 'IMG_6401.jpg', 'IMG_6402.jpg', 'IMG_6403.jpg', 'IMG_6404.jpg',
+    'IMG_6405.jpg', 'IMG_6406.jpg', 'IMG_6407.jpg', 'IMG_6408.jpg', 'IMG_6409.jpg',
+    'IMG_6410.jpg', 'IMG_6411.jpg', 'IMG_6412.jpg', 'IMG_6413.jpg', 'IMG_6414.jpg',
+    'IMG_6415.jpg', 'IMG_6416.jpg', 'IMG_6417.jpg', 'IMG_6418.jpg', 'IMG_6419.jpg',
+    'IMG_6420.jpg', 'IMG_6421.jpg', 'IMG_6422.jpg', 'IMG_6423.jpg', 'IMG_6424.jpg',
+    'IMG_6425.jpg', 'IMG_6426.jpg', 'IMG_6427.jpg', 'IMG_6428.jpg', 'IMG_6429.jpg',
+    'IMG_6430.jpg', 'IMG_6431.jpg'
+  ];
+  for (let img of imgs) {
+    document.write('<div class="item">');
+    document.write('<img src="/tmp/heic_to_jpg/' + img + '"><br>');
+    document.write('<b>' + img + '</b>');
+    document.write('</div>');
+  }
+</script>
+</body>
+</html>
