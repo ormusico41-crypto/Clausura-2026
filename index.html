@@ -654,81 +654,6 @@
             font-size: 0.8rem;
         }
 
-        /* Timeline Component */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-            margin-top: 1rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -2.45rem;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--surface-color);
-            border: 2px solid var(--accent-primary);
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
-            z-index: 2;
-        }
-
-        .timeline-time {
-            font-size: 0.9rem;
-            color: var(--accent-primary);
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.5px;
-        }
-
-        .timeline-content {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateX(5px);
-        }
-
-        .timeline-title {
-            font-size: 1.1rem;
-            color: var(--text-main);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
         /* Buttons Grid */
         .btn-grid {
             display: grid;
@@ -942,51 +867,16 @@
                 <!-- Logística Preescolar -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fa-solid fa-clock" style="margin-right: 10px;"></i>Minuto a Minuto</h3>
+                        <h3 class="card-title"><i class="fa-solid fa-clock" style="margin-right: 10px;"></i>Logística</h3>
                     </div>
                     <div class="card-body">
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">7:00 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Llegada de Equipo y Docentes</h4>
-                                    <p class="timeline-desc">Ingreso del equipo de artes y profesores encargados. Organización de espacios y camerinos.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">7:30 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Ingreso de Estudiantes y Padres</h4>
-                                    <p class="timeline-desc">Registro y venta de boletas. Los estudiantes se dirigen a los camerinos asignados con sus directores.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">8:00 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Refrigerios</h4>
-                                    <p class="timeline-desc">Entrega de refrigerio a estudiantes en los camerinos. Preparación final e indicaciones previas.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">8:30 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Ingreso a Platea</h4>
-                                    <p class="timeline-desc">Apertura de puertas para el ingreso del público general al teatro. Acomodación de familiares.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">9:00 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Inicio de la Ceremonia</h4>
-                                    <p class="timeline-desc">Comienza oficialmente el acto de Clausura de Preescolar. Se sigue la escaleta aprobada en escenario.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <ul class="task-list">
+                            <li class="task-item"><div class="task-info"><span class="task-name">Llegada de Profesores y Equipo de Artes</span><span class="task-meta">7:00 AM</span></div></li>
+                            <li class="task-item"><div class="task-info"><span class="task-name">Llegada de Padres y Estudiantes / Registro y Venta de Boletas</span><span class="task-meta">7:30 AM</span></div></li>
+                            <li class="task-item"><div class="task-info"><span class="task-name">Entrega de Refrigerio a Estudiantes</span><span class="task-meta">8:00 AM</span></div></li>
+                            <li class="task-item"><div class="task-info"><span class="task-name">Ingreso del Público</span><span class="task-meta">8:30 AM</span></div></li>
+                            <li class="task-item"><div class="task-info"><span class="task-name">Ceremonia de Clausura - Preescolar</span><span class="task-meta">9:00 AM</span></div></li>
+                        </ul>
                     </div>
                 </div>
 
@@ -1134,56 +1024,45 @@
                     <div class="card-header">
                         <h3 class="card-title"><i class="fa-solid fa-clock" style="margin-right: 10px;"></i>Logística del Evento</h3>
                     </div>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">11:00 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Llegada de Profesores</h4>
-                                    <p class="timeline-desc">Ingreso del equipo docente para relevar turnos, preparar los espacios y verificar la logística.</p>
+                    <div class="card-body">
+                        <ul class="task-list">
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Llegada Profesores</span>
+                                    <span class="task-meta">11:00 AM</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">11:30 AM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Ingreso de Estudiantes y Padres</h4>
-                                    <p class="timeline-desc">Registro y venta de boletas. Ubicación de los estudiantes de primaria en sus camerinos respectivos.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Llegada Estudiantes y Padres</span>
+                                    <span class="task-meta">11:30 AM (Registro y venta de boletas)</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">12:00 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Refrigerios y Almuerzos</h4>
-                                    <p class="timeline-desc">Reparto de refrigerios y almuerzo para profesores de arte y administrativos.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Refrigerios y Almuerzos</span>
+                                    <span class="task-meta">12:00 PM (Reparto refrigerios / Almuerzo Prof. Arte y Admin)</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">12:30 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Ingreso a Platea</h4>
-                                    <p class="timeline-desc">Apertura de puertas para el ingreso del público y familiares de los estudiantes de Primaria.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Ingreso del Público</span>
+                                    <span class="task-meta">12:30 PM</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">1:00 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Inicio de la Ceremonia</h4>
-                                    <p class="timeline-desc">Comienza oficialmente el acto de Clausura de Primaria. Seguimiento de la escaleta en escenario.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Ceremonia de Clausura - Primaria</span>
+                                    <span class="task-meta" style="color: var(--accent-primary); font-weight: bold;">1:00 PM</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">1:15 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Almuerzo (Venta de boletas)</h4>
-                                    <p class="timeline-desc">Turno de almuerzo para el personal de taquilla.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Almuerzo (Venta de boletas)</span>
+                                    <span class="task-meta">1:15 PM (Personal de taquilla)</span>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
@@ -1343,56 +1222,44 @@
                         <h3 class="card-title"><i class="fa-solid fa-clock" style="margin-right: 10px;"></i>Logística del Evento</h3>
                     </div>
                     <div class="card-body">
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">3:30 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Llegada de Profesores</h4>
-                                    <p class="timeline-desc">Ingreso del equipo docente de Bachillerato para relevo y preparación logística del cierre.</p>
+                        <ul class="task-list">
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Llegada Profesores</span>
+                                    <span class="task-meta">3:30 PM (Bachillerato)</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">4:00 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Ingreso de Estudiantes y Padres</h4>
-                                    <p class="timeline-desc">Registro y venta de boletas. Los estudiantes mayores se ubican en camerinos y áreas asignadas.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Llegada Estudiantes y Padres</span>
+                                    <span class="task-meta">4:00 PM (Registro y venta de boletas)</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">5:00 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Refrigerios</h4>
-                                    <p class="timeline-desc">Entrega de refrigerio a estudiantes, directores de curso y personal de apoyo logístico.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Entrega de Refrigerios</span>
+                                    <span class="task-meta">5:00 PM (A estudiantes, dir. de curso y personal)</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">5:30 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Ingreso a Platea</h4>
-                                    <p class="timeline-desc">Apertura de puertas para el público asistente a la última ceremonia del día.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Ingreso del Público</span>
+                                    <span class="task-meta">5:30 PM</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">6:00 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Inicio de la Ceremonia</h4>
-                                    <p class="timeline-desc">Comienza oficialmente el acto de Clausura de Bachillerato. Seguimiento de escaleta final.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Ceremonia de Clausura - Bachillerato</span>
+                                    <span class="task-meta" style="color: var(--accent-primary); font-weight: bold;">6:00 PM</span>
                                 </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">8:00 PM</div>
-                                <div class="timeline-content">
-                                    <h4 class="timeline-title">Desmontaje</h4>
-                                    <p class="timeline-desc">Finalización del evento. Inicio de labores de recolección, desmontaje de equipos y limpieza.</p>
+                            </li>
+                            <li class="task-item">
+                                <div class="task-info">
+                                    <span class="task-name">Desmontaje</span>
+                                    <span class="task-meta">8:00 PM</span>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
