@@ -1,0 +1,35 @@
+
+--- PAGE 1 ---
+CEREMONIA DE CLAUSURA CIEDI
+1VOZ 1 - Inalámbrico
+2VOZ 2 Inalámbrico
+3VOZ 3 Inalámbrico
+4VOZ 4 Inalámbrico
+5VOZ 5
+6VOZ 6
+7VOZ 7
+8VOZ 8
+9VOZ 9
+10VOZ 10
+11Sax 112Sax 2
+13Trumpet 1
+14Trumpet 2
+15Bombo
+16Caja
+17Hit - hat
+18Tom 1
+19Tom 2
+20Over Head 
+21Percusión Menor - Co
+22Teclado 123Teclado 2
+24Teclado 3
+25Teclado 4
+26Teclado 5
+27Teclado 6
+28Guitarra Eléctrica N
+29Guitarra Electroacus
+30Bajo
+31Aux R
+32Aux L
+Van 4 guitarras más, estarán conectadas a dos amplificadores LINE 6, Estas no van conectadas a la consola.
+Generado con Ridermaker 1 / 1

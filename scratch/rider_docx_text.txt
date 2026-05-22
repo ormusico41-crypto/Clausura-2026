@@ -1,0 +1,49 @@
+=== PARAGRAPHS ===
+[0] Rider técnico – CIEDI
+[1]                                 Docentes de música encargados: Orlando Gómez, Oscar Villarreal y Joan Cabrera.
+[3] DISTRIBUCIÓN DE ENVÍOS – MONITOREO
+
+=== TABLES ===
+
+Table 0:
+Canal | Instrumento | Micrófono | Línea + Caja Directa | Observaciones
+1 | Voz 1 - Inalámbrico | X |  | Con base
+2 | Voz 2 - Inalámbrico | X |  | Con base
+3 | Voz 3 - Inalámbrico | X |  | Con base
+4 | Voz 4 - Inalámbrico | X |  | Con base
+5 | Voz 5 – De mano | X |  | Con base
+6 | Voz 6 - De mano | X |  | Con base
+7 | Voz 7 - De mano | X |  | Con base
+8 | Voz 8 - De mano | X |  | Con base
+9 | Voz 9 – de mano | X |  | Con base
+10 | Voz  10 de mano | X |  | Con base
+11 | Vientos - Saxofón 1 | X |  | Con base
+12 | Vientos - Saxofón 2 | X |  | Con base
+13 | Vientos - Trompeta 1 | X |  | Con base
+14 | Vientos - Trompeta 2 | X |  | Con base
+15 | Batería – set - Bombo | X |  | 
+16 | Batería – set – Caja | X |  | 
+17 | Batería – set – Hi hat | X |  | 
+18 | Batería – set – Tom 1 | X |  | 
+19 | Batería – set – Tom 2 | X |  | 
+20 | Batería – set – Over Head L | X |  | Con base
+21 | Percusión Menor - Conga L  y  R | X |  | Con base
+22 | Teclado 1 |  | X | Teclado principal
+23 | Teclado 2 |  | X | 
+24 | Teclado 3 |  | X | 
+25 | Teclado 4 |  | X | 
+26 | Teclado 5 |  | X | 
+27 | Teclado 6 |  | X | 
+28 | Guitarra Eléctrica Negro blanco | Ample y Line | X | Van4 guitarras más, se conectarán a los amplificadores Line 6, pero no van conectadas a la consola
+29 | Guitarra Electroacustica 1 |  | X | Van4 guitarras más, se conectarán a los amplificadores Line 6, pero no van conectadas a la consola
+30 | Bajo | Ample y Line | X | 
+31 | Aux R |  |  | 
+32 | Aux L |  |  | 
+
+Table 1:
+ENVÍO | DETALLE |  | 
+1 | R-Frontal - voces |  | 
+2 | L-Frontal - voces |  | 
+3 | R- Lateral – Mezcla general y voces |  | 
+4 | L- Lateral – Mezcla general y voces |  | 
+5 | Techo - Mezcla general y voces |  | 
