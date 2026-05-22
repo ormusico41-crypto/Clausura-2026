@@ -863,6 +863,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
         .minuto-header-title {
             display: flex;
@@ -897,13 +898,34 @@
 
         /* Modal Body */
         .minuto-body {
-            height: calc(85vh - 80px); /* Altura controlada para evitar que sea recortado por el parent y forzar scrollbar */
+            flex: 1;
+            min-height: 0; /* Soluciona bug de scroll en flexbox de PC */
             overflow-y: auto;
             padding: 24px;
             background-color: #f8fafc;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+
+        .minuto-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .minuto-body::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+
+        .minuto-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .minuto-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         /* Controles: Buscador y Filtros */
@@ -1231,7 +1253,8 @@
             .minuto-body {
                 padding: 16px;
                 gap: 16px;
-                height: calc(95vh - 70px); /* Altura controlada en celular */
+                flex: 1;
+                min-height: 0;
             }
             .minuto-table-container {
                 display: none;
