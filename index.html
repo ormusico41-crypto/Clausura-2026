@@ -771,6 +771,509 @@
                 text-align: center;
             }
         }
+        
+        /* ==========================================================================
+           ESTILOS MINUTO A MINUTO (INTERACTIVO Y RESPONSIVO)
+           ========================================================================== */
+        
+        /* Botón de apertura */
+        .btn-minuto {
+            background: linear-gradient(135deg, #1F3864 0%, #3a5c96 100%);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(31, 56, 100, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+        .btn-minuto:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(31, 56, 100, 0.4);
+            filter: brightness(1.1);
+        }
+        .btn-minuto:active {
+            transform: translateY(0);
+        }
+        .btn-minuto i {
+            font-size: 1.1rem;
+            animation: clock-spin 10s linear infinite;
+        }
+        @keyframes clock-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal Overlay Premium (Glassmorphism) */
+        .minuto-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            padding: 20px;
+        }
+        .minuto-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal Content Container */
+        .minuto-content {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 1100px;
+            height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .minuto-overlay.active .minuto-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Modal Header */
+        .minuto-header {
+            padding: 20px 24px;
+            background: #1F3864;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .minuto-header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .minuto-header-title h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        .minuto-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+        .minuto-close-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        /* Modal Body */
+        .minuto-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Controles: Buscador y Filtros */
+        .minuto-controls {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .minuto-search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+        .minuto-search-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        .minuto-search-input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .minuto-search-input:focus {
+            border-color: #1F3864;
+            box-shadow: 0 0 0 3px rgba(31, 56, 100, 0.15);
+        }
+        .minuto-filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .minuto-filter-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #475569;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .minuto-filter-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        .minuto-filter-btn.active {
+            background: #1F3864;
+            color: white;
+            border-color: #1F3864;
+            box-shadow: 0 4px 10px rgba(31, 56, 100, 0.2);
+        }
+
+        /* Leyenda de Colores */
+        .minuto-legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.08);
+            display: inline-block;
+        }
+
+        /* Diseño de Tabla (PC) */
+        .minuto-table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .minuto-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .minuto-table th {
+            background: #1F3864;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+        }
+        .minuto-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #1e293b;
+            vertical-align: middle;
+        }
+        .minuto-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Clases de colores según especificación */
+        .row-protocolo { background-color: rgba(229, 229, 229, 0.35); }
+        .row-actrices { background-color: rgba(189, 215, 238, 0.35); }
+        .row-danza { background-color: rgba(179, 229, 161, 0.35); }
+        .row-musica { background-color: rgba(255, 230, 153, 0.35); }
+        .row-acto { background-color: rgba(246, 197, 172, 0.6); font-weight: 700; }
+        .row-acto td { color: #8c3a1c !important; }
+
+        /* Clases para modo móvil (Cards) */
+        .minuto-cards-container {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .minuto-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+        .minuto-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+        }
+        .card-protocolo { background-color: rgba(229, 229, 229, 0.25); }
+        .card-protocolo::before { background-color: #94a3b8; }
+        .card-actrices { background-color: rgba(189, 215, 238, 0.25); }
+        .card-actrices::before { background-color: #3b82f6; }
+        .card-danza { background-color: rgba(179, 229, 161, 0.25); }
+        .card-danza::before { background-color: #22c55e; }
+        .card-musica { background-color: rgba(255, 230, 153, 0.25); }
+        .card-musica::before { background-color: #eab308; }
+        .card-acto { 
+            background-color: rgba(246, 197, 172, 0.45); 
+            border: 1px dashed #f6c5ac; 
+            padding: 12px 16px; 
+            text-align: center;
+        }
+        .card-acto::before { background-color: #ea580c; }
+        .card-acto .acto-title {
+            color: #8c3a1c;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .card-time-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-time {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 1.1rem;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #cbd5e1;
+        }
+        .card-number {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0f172a;
+            margin: 2px 0 6px 0;
+            line-height: 1.3;
+        }
+        .card-field {
+            font-size: 0.85rem;
+            color: #334155;
+            line-height: 1.4;
+        }
+        .card-field strong {
+            color: #0f172a;
+        }
+
+        /* Botón de Live Tracking */
+        .btn-live-track {
+            margin-top: 6px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #1F3864;
+            background: transparent;
+            color: #1F3864;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            max-width: 140px;
+        }
+        .btn-live-track:hover {
+            background: #1F3864;
+            color: white;
+        }
+        
+        /* Fila / Tarjeta Activa (Resaltado en Vivo) */
+        .minuto-row.actividad-activa {
+            background-color: #fff9db !important;
+            border-left: 5px solid #f59e0b !important;
+            box-shadow: inset 0 0 10px rgba(245, 158, 11, 0.1);
+        }
+        .minuto-card.actividad-activa {
+            background-color: #fff9db !important;
+            border: 2px solid #f59e0b !important;
+            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.15);
+            transform: scale(1.02);
+        }
+        .minuto-card.actividad-activa::before {
+            width: 8px;
+            background-color: #f59e0b;
+        }
+        
+        .actividad-activa .btn-live-track {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+        
+        /* Badge En Vivo */
+        .live-badge {
+            display: none;
+            background: #ef4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            align-items: center;
+            gap: 4px;
+            width: fit-content;
+            animation: pulse-red 2s infinite;
+        }
+        .actividad-activa .live-badge {
+            display: inline-flex;
+        }
+        
+        /* Indicador de Pulso */
+        .live-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px white;
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        
+        @keyframes pulse-glow {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        /* Adaptación a dispositivos móviles */
+        @media (max-width: 768px) {
+            .minuto-overlay {
+                padding: 10px;
+            }
+            .minuto-content {
+                height: 95vh;
+                border-radius: 12px;
+            }
+            .minuto-body {
+                padding: 16px;
+                gap: 16px;
+            }
+            .minuto-table-container {
+                display: none;
+            }
+            .minuto-cards-container {
+                display: flex;
+            }
+            .minuto-controls {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px;
+                gap: 12px;
+            }
+            .minuto-search-wrapper {
+                min-width: 100%;
+            }
+            .minuto-filter-buttons {
+                justify-content: flex-start;
+                width: 100%;
+            }
+            .minuto-filter-btn {
+                flex: 1 1 calc(50% - 4px);
+                text-align: center;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .minuto-legend {
+                padding: 10px 12px;
+                gap: 10px 14px;
+            }
+            .minuto-header {
+                padding: 16px;
+            }
+            .minuto-header-title h2 {
+                font-size: 1.1rem;
+            }
+            .btn-minuto {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 20px;
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1216,9 +1719,14 @@
 
         <!-- Bachillerato -->
         <div id="bachillerato" class="content-section">
-            <header class="section-header">
-                <h1 class="section-title">Nivel Bachillerato</h1>
-                <p class="section-subtitle">Detalle Logístico y Manejo de Camerinos</p>
+            <header class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h1 class="section-title" style="text-align: left; justify-content: flex-start; margin-bottom: 5px;">Nivel Bachillerato</h1>
+                    <p class="section-subtitle" style="text-align: left; margin: 0;">Detalle Logístico y Manejo de Camerinos</p>
+                </div>
+                <button class="btn-minuto" onclick="openMinutoModal()">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Minuto a Minuto
+                </button>
             </header>
 
             <div class="dashboard-grid">
@@ -1815,6 +2323,140 @@
                 closeModal();
             }
         });
+
+        // --- Lógica del Minuto a Minuto (Interactivo y Premium) ---
+        let currentRoleFilter = 'all';
+        let activeLiveId = null;
+
+        function openMinutoModal() {
+            const modal = document.getElementById('minutoModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Bloquear scroll del fondo
+            }
+        }
+
+        function closeMinutoModal() {
+            const modal = document.getElementById('minutoModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restaurar scroll
+            }
+        }
+
+        // Cerrar minutoModal al hacer clic fuera y restaurar estado
+        document.addEventListener('DOMContentLoaded', () => {
+            const minutoModal = document.getElementById('minutoModal');
+            if (minutoModal) {
+                minutoModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeMinutoModal();
+                    }
+                });
+            }
+            
+            // Restaurar estado de actividad en vivo desde localStorage
+            const savedId = localStorage.getItem('minuto_actual');
+            if (savedId) {
+                const id = parseInt(savedId);
+                if (!isNaN(id)) {
+                    setLiveActividad(id);
+                }
+            }
+        });
+
+        function filterByRole(role, btn) {
+            currentRoleFilter = role;
+            
+            // Actualizar clase activa en los botones de filtro
+            document.querySelectorAll('.minuto-filter-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            if (btn) {
+                btn.classList.add('active');
+            } else {
+                const matchingBtn = document.querySelector(`.minuto-filter-btn[data-filter="${role}"]`);
+                if (matchingBtn) matchingBtn.classList.add('active');
+            }
+            
+            filterMinuto();
+        }
+
+        function filterMinuto() {
+            const query = document.getElementById('minutoSearch').value.toLowerCase().trim();
+            const words = query.split(/\s+/).filter(w => w.length > 0);
+            
+            // 1. Filtrar filas de la tabla
+            document.querySelectorAll('.minuto-row').forEach(row => {
+                applyElementFilter(row, 'row', words);
+            });
+            
+            // 2. Filtrar tarjetas
+            document.querySelectorAll('.minuto-card').forEach(card => {
+                applyElementFilter(card, 'card', words);
+            });
+        }
+
+        function applyElementFilter(el, type, words) {
+            const role = el.getAttribute('data-role');
+            const searchData = el.getAttribute('data-search') || '';
+            
+            // A. Filtrado por Rol
+            let roleMatch = false;
+            if (currentRoleFilter === 'all') {
+                roleMatch = true;
+            } else if (role === currentRoleFilter) {
+                roleMatch = true;
+            } else if (role === 'acto') {
+                // Las transiciones (separadores de actos) se ocultan al filtrar por rol específico
+                roleMatch = false;
+            }
+            
+            // B. Filtrado por Búsqueda de Texto
+            let textMatch = true;
+            if (words.length > 0) {
+                if (searchData) {
+                    textMatch = words.every(word => searchData.toLowerCase().includes(word));
+                } else {
+                    textMatch = false;
+                }
+                
+                // Las líneas de transición se muestran en la búsqueda solo si contienen el término
+                if (role === 'acto') {
+                    textMatch = searchData ? words.every(word => searchData.toLowerCase().includes(word)) : false;
+                }
+            }
+            
+            // C. Aplicar visibilidad
+            if (roleMatch && textMatch) {
+                el.style.display = '';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        function setLiveActividad(id) {
+            // Remover clase activa de todas las filas y tarjetas
+            document.querySelectorAll('.minuto-row, .minuto-card').forEach(el => {
+                el.classList.remove('actividad-activa');
+            });
+            
+            if (activeLiveId === id) {
+                // Si hacemos clic en la que ya está activa, la desactivamos
+                activeLiveId = null;
+                localStorage.removeItem('minuto_actual');
+            } else {
+                // Activamos la nueva
+                activeLiveId = id;
+                localStorage.setItem('minuto_actual', id);
+                
+                const activeRow = document.getElementById(`row-${id}`);
+                const activeCard = document.getElementById(`card-${id}`);
+                
+                if (activeRow) activeRow.classList.add('actividad-activa');
+                if (activeCard) activeCard.classList.add('actividad-activa');
+            }
+        }
     </script>
 
     <!-- Modal Component -->
@@ -1828,6 +2470,715 @@
                 <ul class="student-list" id="studentList">
                     <!-- Lista dinámica de estudiantes -->
                 </ul>
+            </div>
+    </div>
+
+    <!-- Modal Minuto a Minuto (Interactivo y Premium) -->
+    <div class="minuto-overlay" id="minutoModal">
+        <div class="minuto-content">
+            <header class="minuto-header">
+                <div class="minuto-header-title">
+                    <span class="live-pulse"></span>
+                    <h2>Minuto a Minuto: Bachillerato Eureka</h2>
+                </div>
+                <button class="minuto-close-btn" onclick="closeMinutoModal()"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <div class="minuto-body">
+                
+                <!-- Buscador y Filtros -->
+                <div class="minuto-controls">
+                    <div class="minuto-search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="minutoSearch" class="minuto-search-input" placeholder="Buscar actividad, responsable, camerino o curso..." oninput="filterMinuto()">
+                    </div>
+                    <div class="minuto-filter-buttons">
+                        <button class="minuto-filter-btn active" data-filter="all" onclick="filterByRole('all', this)">Todos</button>
+                        <button class="minuto-filter-btn" data-filter="protocolo" onclick="filterByRole('protocolo', this)">Protocolo</button>
+                        <button class="minuto-filter-btn" data-filter="actrices" onclick="filterByRole('actrices', this)">Actrices</button>
+                        <button class="minuto-filter-btn" data-filter="danza" onclick="filterByRole('danza', this)">Danza</button>
+                        <button class="minuto-filter-btn" data-filter="musica" onclick="filterByRole('musica', this)">Música</button>
+                    </div>
+                </div>
+
+                <!-- Leyenda de colores -->
+                <div class="minuto-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #E5E5E5;"></span>
+                        <span>Protocolo / Coordinación</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #BDD7EE;"></span>
+                        <span>Actrices / Escenas</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #B3E5A1;"></span>
+                        <span>Danza / Coreografía</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #FFE699;"></span>
+                        <span>Música / Orquesta</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #F6C5AC;"></span>
+                        <span>Líneas de Acto</span>
+                    </div>
+                </div>
+
+                <!-- Vista de Tabla (PC) -->
+                <div class="minuto-table-container">
+                    <table class="minuto-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">#</th>
+                                <th style="width: 80px;">Hora</th>
+                                <th style="width: 250px;">Actividad</th>
+                                <th>Intervienen</th>
+                                <th style="width: 200px;">Responsable</th>
+                                <th style="width: 140px;">Seguimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody id="minutoTableBody">
+                            <!-- Protocolo Inicial -->
+                            <tr class="minuto-row row-protocolo" id="row-1" data-role="protocolo" data-search="1 18:00 bienvenida familias estudiantes docentes coordinacion protocolo">
+                                <td>1</td>
+                                <td>18:00</td>
+                                <td><strong>Bienvenida</strong></td>
+                                <td>Familias, estudiantes y docentes</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(1)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="row-2" data-role="protocolo" data-search="2 18:10 himno nacional de colombia toda comunidad ciedi coordinacion protocolo">
+                                <td>2</td>
+                                <td>18:10</td>
+                                <td><strong>Himno Nacional de Colombia</strong></td>
+                                <td>Toda la comunidad CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(2)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="row-3" data-role="protocolo" data-search="3 18:13 himno del colegio ciedi toda comunidad ciedi coordinacion protocolo">
+                                <td>3</td>
+                                <td>18:13</td>
+                                <td><strong>Himno del Colegio CIEDI</strong></td>
+                                <td>Toda la comunidad CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(3)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="row-4" data-role="protocolo" data-search="4 18:16 palabras de bienvenida del rector felipe palacios ciedi coordinacion protocolo">
+                                <td>4</td>
+                                <td>18:16</td>
+                                <td><strong>Palabras de bienvenida del Rector</strong></td>
+                                <td>Felipe Palacios — Rector CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(4)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+
+                            <!-- Acto I -->
+                            <tr class="minuto-row row-acto" data-role="acto" data-search="acto i romeo y julieta amor idealizado geraldine carroll">
+                                <td colspan="5">ACTO I · Romeo y Julieta (amor idealizado)</td>
+                                <td><span style="font-size: 0.8rem; color: #8c3a1c; font-weight: 700;">Transición</span></td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-5" data-role="actrices" data-search="5 18:21 apertura eureka eli plantea su pregunta personaje hilo amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                                <td>5</td>
+                                <td>18:21</td>
+                                <td><strong>Apertura 'Eureka': Eli plantea su pregunta</strong></td>
+                                <td>Eli: Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(5)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-6" data-role="actrices" data-search="6 18:25 intervencion actrices amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                                <td>6</td>
+                                <td>18:25</td>
+                                <td><strong>Intervención Actrices</strong></td>
+                                <td>Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(6)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="row-7" data-role="danza" data-search="7 18:30 danza grado 6 grupo danza paola miranda camerino ana margarita bello">
+                                <td>7</td>
+                                <td>18:30</td>
+                                <td><strong>Danza — Grado 6°</strong></td>
+                                <td>Grupo danza 6° · Paola Miranda (camerino)</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(7)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-8" data-role="actrices" data-search="8 18:36 intervencion actrices amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                                <td>8</td>
+                                <td>18:36</td>
+                                <td><strong>Intervención Actrices</strong></td>
+                                <td>Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(8)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="row-9" data-role="musica" data-search="9 18:42 orquesta grado 6 estudiantes clemente constanza orozco camerino oscar villarreal joan cabrera musica">
+                                <td>9</td>
+                                <td>18:42</td>
+                                <td><strong>Orquesta — Grado 6°</strong></td>
+                                <td>Estudiantes 6° · Constanza Orozco (camerino)</td>
+                                <td>Oscar Villarreal y Joan Cabrera</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(9)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-10" data-role="actrices" data-search="10 18:46 intervencion actrices amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                                <td>10</td>
+                                <td>18:46</td>
+                                <td><strong>Intervención Actrices</strong></td>
+                                <td>Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(10)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+
+                            <!-- Acto II -->
+                            <tr class="minuto-row row-acto" data-role="acto" data-search="acto ii mitologia griega destino impuesto geraldine carroll">
+                                <td colspan="5">ACTO II · Mitología griega (destino impuesto)</td>
+                                <td><span style="font-size: 0.8rem; color: #8c3a1c; font-weight: 700;">Transición</span></td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="row-11" data-role="musica" data-search="11 18:52 orquesta grado 7 estudiantes johan rodriguez angeli bocanegra camerino oscar villarreal orlando gomez musica">
+                                <td>11</td>
+                                <td>18:52</td>
+                                <td><strong>Orquesta — Grado 7°</strong></td>
+                                <td>Estudiantes 7° · Johan Rodríguez / Angeli Bocanegra (camerino)</td>
+                                <td>Oscar Villarreal y Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(11)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="row-12" data-role="danza" data-search="12 18:58 danza grado 7 grupo rocio alarcon camerino ana margarita bello">
+                                <td>12</td>
+                                <td>18:58</td>
+                                <td><strong>Danza — Grado 7°</strong></td>
+                                <td>Grupo danza 7° · Rocío Alarcón (camerino)</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(12)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-13" data-role="actrices" data-search="13 19:02 intervencion actrices ana sofia herrera ana maria galvis 7 geraldine carroll actrices">
+                                <td>13</td>
+                                <td>19:02</td>
+                                <td><strong>Intervención actrices</strong></td>
+                                <td>Ana Sofía Herrera · Ana María Galvis (7°)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(13)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+
+                            <!-- Acto III -->
+                            <tr class="minuto-row row-acto" data-role="acto" data-search="acto iii 12 cuentos peregrinos cotidianidad humana geraldine carroll">
+                                <td colspan="5">Acto III · 12 cuentos peregrinos (cotidianidad humana)</td>
+                                <td><span style="font-size: 0.8rem; color: #8c3a1c; font-weight: 700;">Transición</span></td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="row-14" data-role="danza" data-search="14 19:08 danza grado 8 grupo cristina florez camerino ana margarita bello">
+                                <td>14</td>
+                                <td>19:08</td>
+                                <td><strong>Danza — Grado 8°</strong></td>
+                                <td>Grupo danza 8° · Cristina Flórez (camerino)</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(14)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="row-15" data-role="musica" data-search="15 19:14 orquesta grado 8 estudiantes liseth sarmiento maria eugenia diaz camerino oscar villarreal orlando gomez musica">
+                                <td>15</td>
+                                <td>19:14</td>
+                                <td><strong>Orquesta — Grado 8°</strong></td>
+                                <td>Estudiantes 8° · Liseth Sarmiento / María Eugenia Díaz (camerino)</td>
+                                <td>Oscar Villarreal y Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(15)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-16" data-role="actrices" data-search="16 19:18 intervencion actrices ana jacome 8 geraldine carroll actrices">
+                                <td>16</td>
+                                <td>19:18</td>
+                                <td><strong>Intervención actrices</strong></td>
+                                <td>Ana Jácome · (8°)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(16)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+
+                            <!-- Acto IV -->
+                            <tr class="minuto-row row-acto" data-role="acto" data-search="acto iv bodas de sangre pasion impulsiva geraldine carroll">
+                                <td colspan="5">ACTO IV· Bodas de sangre (pasión impulsiva)</td>
+                                <td><span style="font-size: 0.8rem; color: #8c3a1c; font-weight: 700;">Transición</span></td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="row-17" data-role="musica" data-search="17 19:24 orquesta grado 9 estudiantes nicolas gonzalez camerino oscar villarreal orlando gomez musica">
+                                <td>17</td>
+                                <td>19:24</td>
+                                <td><strong>Orquesta — Grado 9°</strong></td>
+                                <td>Estudiantes 9° · Nicolás González (camerino)</td>
+                                <td>Oscar Villarreal y Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(17)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="row-18" data-role="danza" data-search="18 19:30 danza grado 9 grupo lilian salas ana maria murillo camerino 4 ana margarita bello">
+                                <td>18</td>
+                                <td>19:30</td>
+                                <td><strong>Danza — Grado 9°</strong></td>
+                                <td>Grupo danza 9° · Lilian Salas y Ana María Murillo (Camerino 4)</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(18)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="row-19" data-role="actrices" data-search="19 19:35 cierre reflexion final de eli actrices 4 actos geraldine carroll actrices">
+                                <td>19</td>
+                                <td>19:35</td>
+                                <td><strong>Cierre: Reflexión final de Eli</strong></td>
+                                <td>Eli (actrices de los 4 actos)</td>
+                                <td>Geraldine Carroll</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(19)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+
+                            <!-- Acto V -->
+                            <tr class="minuto-row row-acto" data-role="acto" data-search="acto v eureka geraldine carroll">
+                                <td colspan="5">ACTO V · Eureka</td>
+                                <td><span style="font-size: 0.8rem; color: #8c3a1c; font-weight: 700;">Transición</span></td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="row-20" data-role="danza" data-search="20 19:38 danza grado 11 grupo danza ana margarita bello">
+                                <td>20</td>
+                                <td>19:38</td>
+                                <td><strong>Danza — Grado 11°</strong></td>
+                                <td>Grupo danza 11° · (camerino)</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(20)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="row-21" data-role="musica" data-search="21 19:41 punto sorpresa grupo musica grado 10 estudiantes paola giraldo neftali benavides camerino orlando gomez musica">
+                                <td>21</td>
+                                <td>19:41</td>
+                                <td><strong>★ PUNTO SORPRESA · Grupo Música Grado 10°</strong></td>
+                                <td>Estudiantes 10° · Paola Giraldo / Neftali Benavides (camerino)</td>
+                                <td>Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(21)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="row-22" data-role="musica" data-search="22 19:47 punto sorpresa grupo musica grado 11 promocion 2026 estudiantes angeli bocanegra camerino orlando gomez musica">
+                                <td>22</td>
+                                <td>19:47</td>
+                                <td><strong>★ PUNTO SORPRESA · Grupo Música Grado 11° (Promoción 2026)</strong></td>
+                                <td>Estudiantes 11° · Angeli Bocanegra (camerino)</td>
+                                <td>Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(22)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="row-23" data-role="protocolo" data-search="23 20:00 palabras de cierre david jacome vicerrector coordinacion protocolo">
+                                <td>23</td>
+                                <td>20:00</td>
+                                <td><strong>Palabras de cierre</strong></td>
+                                <td>David Jácome / vicerrector</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(23)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="row-24" data-role="protocolo" data-search="24 20:15 fotografia grupal y compartir toda comunidad ciedi coordinacion protocolo">
+                                <td>24</td>
+                                <td>20:15</td>
+                                <td><strong>Fotografía grupal y compartir</strong></td>
+                                <td>Toda la comunidad CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLiveActividad(24)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vista de Tarjetas (Móvil) -->
+                <div class="minuto-cards-container" id="minutoCardsContainer">
+                    <!-- Protocolo Inicial -->
+                    <div class="minuto-card card-protocolo" id="card-1" data-role="protocolo" data-search="1 18:00 bienvenida familias estudiantes docentes coordinacion protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">18:00</span>
+                            <span class="card-number">Actividad #1</span>
+                        </div>
+                        <h3 class="card-title">Bienvenida</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Familias, estudiantes y docentes</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(1)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="card-2" data-role="protocolo" data-search="2 18:10 himno nacional de colombia toda comunidad ciedi coordinacion protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">18:10</span>
+                            <span class="card-number">Actividad #2</span>
+                        </div>
+                        <h3 class="card-title">Himno Nacional de Colombia</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Toda la comunidad CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(2)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="card-3" data-role="protocolo" data-search="3 18:13 himno del colegio ciedi toda comunidad ciedi coordinacion protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">18:13</span>
+                            <span class="card-number">Actividad #3</span>
+                        </div>
+                        <h3 class="card-title">Himno del Colegio CIEDI</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Toda la comunidad CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(3)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="card-4" data-role="protocolo" data-search="4 18:16 palabras de bienvenida del rector felipe palacios ciedi coordinacion protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">18:16</span>
+                            <span class="card-number">Actividad #4</span>
+                        </div>
+                        <h3 class="card-title">Palabras de bienvenida del Rector</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Felipe Palacios — Rector CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(4)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+
+                    <!-- Acto I -->
+                    <div class="minuto-card card-acto" data-role="acto" data-search="acto i romeo y julieta amor idealizado geraldine carroll">
+                        <h3 class="acto-title">ACTO I · Romeo y Julieta (amor idealizado)</h3>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-5" data-role="actrices" data-search="5 18:21 apertura eureka eli plantea su pregunta personaje hilo amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">18:21</span>
+                            <span class="card-number">Actividad #5</span>
+                        </div>
+                        <h3 class="card-title">Apertura 'Eureka': Eli plantea su pregunta</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Eli: Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(5)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-6" data-role="actrices" data-search="6 18:25 intervencion actrices amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">18:25</span>
+                            <span class="card-number">Actividad #6</span>
+                        </div>
+                        <h3 class="card-title">Intervención Actrices</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(6)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="card-7" data-role="danza" data-search="7 18:30 danza grado 6 grupo danza paola miranda camerino ana margarita bello">
+                        <div class="card-time-row">
+                            <span class="card-time">18:30</span>
+                            <span class="card-number">Actividad #7</span>
+                        </div>
+                        <h3 class="card-title">Danza — Grado 6°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grupo danza 6° · Paola Miranda (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(7)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-8" data-role="actrices" data-search="8 18:36 intervencion actrices amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">18:36</span>
+                            <span class="card-number">Actividad #8</span>
+                        </div>
+                        <h3 class="card-title">Intervención Actrices</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(8)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="card-9" data-role="musica" data-search="9 18:42 orquesta grado 6 estudiantes clemente constanza orozco camerino oscar villarreal joan cabrera musica">
+                        <div class="card-time-row">
+                            <span class="card-time">18:42</span>
+                            <span class="card-number">Actividad #9</span>
+                        </div>
+                        <h3 class="card-title">Orquesta — Grado 6°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes 6° · Constanza Orozco (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal y Joan Cabrera</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(9)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-10" data-role="actrices" data-search="10 18:46 intervencion actrices amalia salinas luciana pinzon amaia mendoza julieta tabarez 6 geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">18:46</span>
+                            <span class="card-number">Actividad #10</span>
+                        </div>
+                        <h3 class="card-title">Intervención Actrices</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Amalia Salinas · Luciana Pinzón · Amaia Mendoza · Julieta Tabarez (6°)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(10)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+
+                    <!-- Acto II -->
+                    <div class="minuto-card card-acto" data-role="acto" data-search="acto ii mitologia griega destino impuesto geraldine carroll">
+                        <h3 class="acto-title">ACTO II · Mitología griega (destino impuesto)</h3>
+                    </div>
+                    <div class="minuto-card card-musica" id="card-11" data-role="musica" data-search="11 18:52 orquesta grado 7 estudiantes johan rodriguez angeli bocanegra camerino oscar villarreal orlando gomez musica">
+                        <div class="card-time-row">
+                            <span class="card-time">18:52</span>
+                            <span class="card-number">Actividad #11</span>
+                        </div>
+                        <h3 class="card-title">Orquesta — Grado 7°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes 7° · Johan Rodríguez / Angeli Bocanegra (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal y Orlando Gómez</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(11)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="card-12" data-role="danza" data-search="12 18:58 danza grado 7 grupo rocio alarcon camerino ana margarita bello">
+                        <div class="card-time-row">
+                            <span class="card-time">18:58</span>
+                            <span class="card-number">Actividad #12</span>
+                        </div>
+                        <h3 class="card-title">Danza — Grado 7°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grupo danza 7° · Rocío Alarcón (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(12)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-13" data-role="actrices" data-search="13 19:02 intervencion actrices ana sofia herrera ana maria galvis 7 geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">19:02</span>
+                            <span class="card-number">Actividad #13</span>
+                        </div>
+                        <h3 class="card-title">Intervención actrices</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Ana Sofía Herrera · Ana María Galvis (7°)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(13)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+
+                    <!-- Acto III -->
+                    <div class="minuto-card card-acto" data-role="acto" data-search="acto iii 12 cuentos peregrinos cotidianidad humana geraldine carroll">
+                        <h3 class="acto-title">Acto III · 12 cuentos peregrinos (cotidianidad humana)</h3>
+                    </div>
+                    <div class="minuto-card card-danza" id="card-14" data-role="danza" data-search="14 19:08 danza grado 8 grupo cristina florez camerino ana margarita bello">
+                        <div class="card-time-row">
+                            <span class="card-time">19:08</span>
+                            <span class="card-number">Actividad #14</span>
+                        </div>
+                        <h3 class="card-title">Danza — Grado 8°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grupo danza 8° · Cristina Flórez (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(14)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="card-15" data-role="musica" data-search="15 19:14 orquesta grado 8 estudiantes liseth sarmiento maria eugenia diaz camerino oscar villarreal orlando gomez musica">
+                        <div class="card-time-row">
+                            <span class="card-time">19:14</span>
+                            <span class="card-number">Actividad #15</span>
+                        </div>
+                        <h3 class="card-title">Orquesta — Grado 8°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes 8° · Liseth Sarmiento / María Eugenia Díaz (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal y Orlando Gómez</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(15)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-16" data-role="actrices" data-search="16 19:18 intervencion actrices ana jacome 8 geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">19:18</span>
+                            <span class="card-number">Actividad #16</span>
+                        </div>
+                        <h3 class="card-title">Intervención actrices</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Ana Jácome · (8°)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(16)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+
+                    <!-- Acto IV -->
+                    <div class="minuto-card card-acto" data-role="acto" data-search="acto iv bodas de sangre pasion impulsiva geraldine carroll">
+                        <h3 class="acto-title">ACTO IV· Bodas de sangre (pasión impulsiva)</h3>
+                    </div>
+                    <div class="minuto-card card-musica" id="card-17" data-role="musica" data-search="17 19:24 orquesta grado 9 estudiantes nicolas gonzalez camerino oscar villarreal orlando gomez musica">
+                        <div class="card-time-row">
+                            <span class="card-time">19:24</span>
+                            <span class="card-number">Actividad #17</span>
+                        </div>
+                        <h3 class="card-title">Orquesta — Grado 9°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes 9° · Nicolás González (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal y Orlando Gómez</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(17)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="card-18" data-role="danza" data-search="18 19:30 danza grado 9 grupo lilian salas ana maria murillo camerino 4 ana margarita bello">
+                        <div class="card-time-row">
+                            <span class="card-time">19:30</span>
+                            <span class="card-number">Actividad #18</span>
+                        </div>
+                        <h3 class="card-title">Danza — Grado 9°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grupo danza 9° · Lilian Salas y Ana María Murillo (Camerino 4)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(18)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="card-19" data-role="actrices" data-search="19 19:35 cierre reflexion final de eli actrices 4 actos geraldine carroll actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">19:35</span>
+                            <span class="card-number">Actividad #19</span>
+                        </div>
+                        <h3 class="card-title">Cierre: Reflexión final de Eli</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Eli (actrices de los 4 actos)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Geraldine Carroll</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(19)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+
+                    <!-- Acto V -->
+                    <div class="minuto-card card-acto" data-role="acto" data-search="acto v eureka geraldine carroll">
+                        <h3 class="acto-title">ACTO V · Eureka</h3>
+                    </div>
+                    <div class="minuto-card card-danza" id="card-20" data-role="danza" data-search="20 19:38 danza grado 11 grupo danza ana margarita bello">
+                        <div class="card-time-row">
+                            <span class="card-time">19:38</span>
+                            <span class="card-number">Actividad #20</span>
+                        </div>
+                        <h3 class="card-title">Danza — Grado 11°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grupo danza 11° · (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(20)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="card-21" data-role="musica" data-search="21 19:41 punto sorpresa grupo musica grado 10 estudiantes paola giraldo neftali benavides camerino orlando gomez musica">
+                        <div class="card-time-row">
+                            <span class="card-time">19:41</span>
+                            <span class="card-number">Actividad #21</span>
+                        </div>
+                        <h3 class="card-title">★ PUNTO SORPRESA · Grupo Música Grado 10°</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes 10° · Paola Giraldo / Neftali Benavides (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Orlando Gómez</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(21)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="card-22" data-role="musica" data-search="22 19:47 punto sorpresa grupo musica grado 11 promocion 2026 estudiantes angeli bocanegra camerino orlando gomez musica">
+                        <div class="card-time-row">
+                            <span class="card-time">19:47</span>
+                            <span class="card-number">Actividad #22</span>
+                        </div>
+                        <h3 class="card-title">★ PUNTO SORPRESA · Grupo Música Grado 11° (Promoción 2026)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes 11° · Angeli Bocanegra (camerino)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Orlando Gómez</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(22)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="card-23" data-role="protocolo" data-search="23 20:00 palabras de cierre david jacome vicerrector coordinacion protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">20:00</span>
+                            <span class="card-number">Actividad #23</span>
+                        </div>
+                        <h3 class="card-title">Palabras de cierre</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> David Jácome / vicerrector</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(23)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="card-24" data-role="protocolo" data-search="24 20:15 fotografia grupal y compartir toda comunidad ciedi coordinacion protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">20:15</span>
+                            <span class="card-number">Actividad #24</span>
+                        </div>
+                        <h3 class="card-title">Fotografía grupal y compartir</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Toda la comunidad CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLiveActividad(24)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
