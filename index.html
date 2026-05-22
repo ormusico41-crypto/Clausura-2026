@@ -911,9 +911,7 @@
             -webkit-overflow-scrolling: touch;
             padding: 24px;
             background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: block; /* Cambio crítico para máxima compatibilidad de scroll nativo en WebKit y dispositivos móviles */
             box-sizing: border-box;
             scrollbar-width: thin;
             scrollbar-color: #cbd5e1 #f1f5f9;
@@ -949,6 +947,7 @@
             padding: 16px;
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
         .minuto-search-wrapper {
             position: relative;
@@ -1018,6 +1017,7 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
             color: #475569;
+            margin-bottom: 20px;
         }
         .legend-item {
             display: flex;
@@ -1263,9 +1263,9 @@
             }
             .minuto-body {
                 padding: 16px;
-                gap: 16px;
                 flex: 1;
                 min-height: 0;
+                display: block !important;
             }
             .minuto-table-container {
                 display: none;
