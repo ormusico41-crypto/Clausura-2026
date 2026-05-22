@@ -899,6 +899,7 @@
         .minuto-body {
             flex: 1;
             min-height: 0; /* Soluciona bug de scroll en flexbox de PC */
+            max-height: calc(85vh - 90px); /* Garantiza altura máxima en PC para forzar el scrollbar */
             overflow-y: auto;
             padding: 24px;
             background-color: #f8fafc;
@@ -1232,6 +1233,7 @@
             .minuto-body {
                 padding: 16px;
                 gap: 16px;
+                max-height: calc(95vh - 70px); /* Garantiza altura máxima en celular */
             }
             .minuto-table-container {
                 display: none;
