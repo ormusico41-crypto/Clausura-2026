@@ -1551,9 +1551,14 @@
 
         <!-- Primaria -->
         <div id="primaria" class="content-section">
-            <header class="section-header">
-                <h1 class="section-title">Nivel Primaria</h1>
-                <p class="section-subtitle">Detalle Logístico y Manejo de Camerinos</p>
+            <header class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h1 class="section-title" style="text-align: left; justify-content: flex-start; margin-bottom: 5px;">Nivel Primaria</h1>
+                    <p class="section-subtitle" style="text-align: left; margin: 0;">Detalle Logístico y Manejo de Camerinos</p>
+                </div>
+                <button class="btn-minuto" onclick="openMinutoPrimariaModal()">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Minuto a Minuto
+                </button>
             </header>
 
             <div class="dashboard-grid">
@@ -2408,14 +2413,14 @@
         function filterByRole(role, btn) {
             currentRoleFilter = role;
             
-            // Actualizar clase activa en los botones de filtro
-            document.querySelectorAll('.minuto-filter-btn').forEach(b => {
+            // Actualizar clase activa en los botones de filtro de Bachillerato
+            document.querySelectorAll('#minutoModal .minuto-filter-btn').forEach(b => {
                 b.classList.remove('active');
             });
             if (btn) {
                 btn.classList.add('active');
             } else {
-                const matchingBtn = document.querySelector(`.minuto-filter-btn[data-filter="${role}"]`);
+                const matchingBtn = document.querySelector(`#minutoModal .minuto-filter-btn[data-filter="${role}"]`);
                 if (matchingBtn) matchingBtn.classList.add('active');
             }
             
@@ -2426,13 +2431,13 @@
             const query = document.getElementById('minutoSearch').value.toLowerCase().trim();
             const words = query.split(/\s+/).filter(w => w.length > 0);
             
-            // 1. Filtrar filas de la tabla
-            document.querySelectorAll('.minuto-row').forEach(row => {
+            // 1. Filtrar filas de la tabla de Bachillerato
+            document.querySelectorAll('#minutoModal .minuto-row').forEach(row => {
                 applyElementFilter(row, 'row', words);
             });
             
-            // 2. Filtrar tarjetas
-            document.querySelectorAll('.minuto-card').forEach(card => {
+            // 2. Filtrar tarjetas de Bachillerato
+            document.querySelectorAll('#minutoModal .minuto-card').forEach(card => {
                 applyElementFilter(card, 'card', words);
             });
         }
@@ -2476,8 +2481,8 @@
         }
 
         function setLiveActividad(id) {
-            // Remover clase activa de todas las filas y tarjetas
-            document.querySelectorAll('.minuto-row, .minuto-card').forEach(el => {
+            // Remover clase activa de todas las filas y tarjetas de Bachillerato
+            document.querySelectorAll('#minutoModal .minuto-row, #minutoModal .minuto-card').forEach(el => {
                 el.classList.remove('actividad-activa');
             });
             
@@ -2492,6 +2497,140 @@
                 
                 const activeRow = document.getElementById(`row-${id}`);
                 const activeCard = document.getElementById(`card-${id}`);
+                
+                if (activeRow) activeRow.classList.add('actividad-activa');
+                if (activeCard) activeCard.classList.add('actividad-activa');
+            }
+        }
+
+        // --- Lógica de Primaria (Minuto a Minuto) ---
+        let currentRolePrimariaFilter = 'all';
+        let activeLivePrimariaId = null;
+
+        function openMinutoPrimariaModal() {
+            const modal = document.getElementById('minutoPrimariaModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Bloquear scroll del fondo
+            }
+        }
+
+        function closeMinutoPrimariaModal() {
+            const modal = document.getElementById('minutoPrimariaModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restaurar scroll
+            }
+        }
+
+        // Configurar handlers de cierre y restauración de Primaria
+        document.addEventListener('DOMContentLoaded', () => {
+            const minutoPrimariaModal = document.getElementById('minutoPrimariaModal');
+            if (minutoPrimariaModal) {
+                minutoPrimariaModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeMinutoPrimariaModal();
+                    }
+                });
+            }
+            
+            // Restaurar estado de actividad de Primaria en vivo desde localStorage
+            const savedPrimariaId = localStorage.getItem('minuto_primaria_actual');
+            if (savedPrimariaId) {
+                const id = parseInt(savedPrimariaId);
+                if (!isNaN(id)) {
+                    setLivePrimariaActividad(id);
+                }
+            }
+        });
+
+        function filterByPrimariaRole(role, btn) {
+            currentRolePrimariaFilter = role;
+            
+            // Actualizar clase activa en los botones de filtro de Primaria
+            document.querySelectorAll('#minutoPrimariaModal .minuto-filter-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            if (btn) {
+                btn.classList.add('active');
+            } else {
+                const matchingBtn = document.querySelector(`#minutoPrimariaModal .minuto-filter-btn[data-filter="${role}"]`);
+                if (matchingBtn) matchingBtn.classList.add('active');
+            }
+            
+            filterMinutoPrimaria();
+        }
+
+        function filterMinutoPrimaria() {
+            const query = document.getElementById('minutoPrimariaSearch').value.toLowerCase().trim();
+            const words = query.split(/\s+/).filter(w => w.length > 0);
+            
+            // 1. Filtrar filas de la tabla de Primaria
+            document.querySelectorAll('#minutoPrimariaModal .minuto-row').forEach(row => {
+                applyPrimariaElementFilter(row, 'row', words);
+            });
+            
+            // 2. Filtrar tarjetas de Primaria
+            document.querySelectorAll('#minutoPrimariaModal .minuto-card').forEach(card => {
+                applyPrimariaElementFilter(card, 'card', words);
+            });
+        }
+
+        function applyPrimariaElementFilter(el, type, words) {
+            const role = el.getAttribute('data-role');
+            const searchData = el.getAttribute('data-search') || '';
+            
+            // A. Filtrado por Rol
+            let roleMatch = false;
+            if (currentRolePrimariaFilter === 'all') {
+                roleMatch = true;
+            } else if (role === currentRolePrimariaFilter) {
+                roleMatch = true;
+            } else if (role === 'acto') {
+                // Las transiciones (separadores de actos) se ocultan al filtrar por rol específico
+                roleMatch = false;
+            }
+            
+            // B. Filtrado por Búsqueda de Texto
+            let textMatch = true;
+            if (words.length > 0) {
+                if (searchData) {
+                    textMatch = words.every(word => searchData.toLowerCase().includes(word));
+                } else {
+                    textMatch = false;
+                }
+                
+                // Las líneas de transición se muestran en la búsqueda solo si contienen el término
+                if (role === 'acto') {
+                    textMatch = searchData ? words.every(word => searchData.toLowerCase().includes(word)) : false;
+                }
+            }
+            
+            // C. Aplicar visibilidad
+            if (roleMatch && textMatch) {
+                el.style.display = '';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        function setLivePrimariaActividad(id) {
+            // Remover clase activa de todas las filas y tarjetas de Primaria
+            document.querySelectorAll('#minutoPrimariaModal .minuto-row, #minutoPrimariaModal .minuto-card').forEach(el => {
+                el.classList.remove('actividad-activa');
+            });
+            
+            if (activeLivePrimariaId === id) {
+                // Si hacemos clic en la que ya está activa, la desactivamos
+                activeLivePrimariaId = null;
+                localStorage.removeItem('minuto_primaria_actual');
+            } else {
+                // Activamos la nueva
+                activeLivePrimariaId = id;
+                localStorage.setItem('minuto_primaria_actual', id);
+                
+                const activeRow = document.getElementById(`primaria-row-${id}`);
+                const activeCard = document.getElementById(`primaria-card-${id}`);
                 
                 if (activeRow) activeRow.classList.add('actividad-activa');
                 if (activeCard) activeCard.classList.add('actividad-activa');
@@ -3223,5 +3362,725 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Minuto a Minuto Primaria (Interactivo y Premium) -->
+    <div class="minuto-overlay" id="minutoPrimariaModal">
+        <div class="minuto-content">
+            <header class="minuto-header">
+                <div class="minuto-header-title">
+                    <span class="live-pulse"></span>
+                    <h2>Minuto a Minuto: Primaria Ohana</h2>
+                </div>
+                <button class="minuto-close-btn" onclick="closeMinutoPrimariaModal()"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <div class="minuto-body">
+                
+                <!-- Buscador y Filtros -->
+                <div class="minuto-controls">
+                    <div class="minuto-search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="minutoPrimariaSearch" class="minuto-search-input" placeholder="Buscar actividad, responsable o detalle..." oninput="filterMinutoPrimaria()">
+                    </div>
+                    <div class="minuto-filter-buttons">
+                        <button class="minuto-filter-btn active" data-filter="all" onclick="filterByPrimariaRole('all', this)">Todos</button>
+                        <button class="minuto-filter-btn" data-filter="protocolo" onclick="filterByPrimariaRole('protocolo', this)">Protocolo</button>
+                        <button class="minuto-filter-btn" data-filter="actrices" onclick="filterByPrimariaRole('actrices', this)">Teatro</button>
+                        <button class="minuto-filter-btn" data-filter="danza" onclick="filterByPrimariaRole('danza', this)">Danza</button>
+                        <button class="minuto-filter-btn" data-filter="musica" onclick="filterByPrimariaRole('musica', this)">Música</button>
+                    </div>
+                </div>
+
+                <!-- Leyenda de colores -->
+                <div class="minuto-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #E5E5E5;"></span>
+                        <span>Protocolo / Coordinación</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #BDD7EE;"></span>
+                        <span>Teatro / Escenas</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #B3E5A1;"></span>
+                        <span>Danza / Coreografía</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #FFE699;"></span>
+                        <span>Música / Ukeleles</span>
+                    </div>
+                </div>
+
+                <!-- Contenedor Principal (Tabla para PC, Cards para Móvil) -->
+                <div class="minuto-view-container">
+                    
+                    <!-- Vista Tabla (Desktop) -->
+                    <div class="minuto-table-view">
+                        <table class="minuto-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px;">#</th>
+                                    <th style="width: 80px;">Hora</th>
+                                    <th>Actividad</th>
+                                    <th>Intervienen</th>
+                                    <th>Responsable</th>
+                                    <th style="width: 120px;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="minutoPrimariaTableBody">
+                            <tr class="minuto-row row-protocolo" id="primaria-row-1" data-role="protocolo" data-search="1 13:00 bienvenida familias, estudiantes y docentes coordinación protocolo">
+                                <td>1</td>
+                                <td>13:00</td>
+                                <td><strong>Bienvenida</strong></td>
+                                <td>Familias, estudiantes y docentes</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(1)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="primaria-row-2" data-role="protocolo" data-search="2 13:10 himno nacional de colombia toda la comunidad ciedi coordinación protocolo">
+                                <td>2</td>
+                                <td>13:10</td>
+                                <td><strong>Himno Nacional de Colombia</strong></td>
+                                <td>Toda la comunidad CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(2)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="primaria-row-3" data-role="protocolo" data-search="3 13:13 himno del colegio ciedi toda la comunidad ciedi coordinación protocolo">
+                                <td>3</td>
+                                <td>13:13</td>
+                                <td><strong>Himno del Colegio CIEDI</strong></td>
+                                <td>Toda la comunidad CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(3)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="primaria-row-4" data-role="protocolo" data-search="4 13:16 palabras de bienvenida del rector felipe palacios — rector ciedi coordinación protocolo">
+                                <td>4</td>
+                                <td>13:16</td>
+                                <td><strong>Palabras de bienvenida del Rector</strong></td>
+                                <td>Felipe Palacios — Rector CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(4)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-acto" id="primaria-row-5" data-role="acto" data-search="5 13:21 stop motion: experimento 626 (stitch en su nave) estudiantes grado 3°a (visuales) juanita guerra entra stitch en la nave al sonar la explosión acto">
+                                <td>5</td>
+                                <td>13:21</td>
+                                <td><strong>Stop Motion: Experimento 626 (Stitch en su nave)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Entra stitch en la nave al sonar la explosión</span></td>
+                                <td>Estudiantes Grado 3°A (visuales)</td>
+                                <td>Juanita Guerra</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(5)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="primaria-row-6" data-role="danza" data-search="6 13:23 danza hula: hawaiian roller coaster ride niñas grado 4°a y 4°b ana margarita bello tablas de surf danza">
+                                <td>6</td>
+                                <td>13:23</td>
+                                <td><strong>Danza Hula: Hawaiian Roller Coaster Ride</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf</span></td>
+                                <td>Niñas Grado 4°A y 4°B</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(6)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="primaria-row-7" data-role="actrices" data-search="7 13:27 teatro — escena i: lilo en clase lilo · profesor · 4 compañeras ana margarita bello tablas de surf actrices">
+                                <td>7</td>
+                                <td>13:27</td>
+                                <td><strong>Teatro — Escena I: Lilo en clase</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf</span></td>
+                                <td>Lilo · profesor · 4 compañeras</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(7)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="primaria-row-8" data-role="musica" data-search="8 13:30 música: heartbreak hotel (elvis presley) grado 2°a y 2°b · oscar villarreal, joan cabrera y orlando gómez bajan ukeleles musica">
+                                <td>8</td>
+                                <td>13:30</td>
+                                <td><strong>Música: Heartbreak Hotel (Elvis Presley)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Bajan Ukeleles</span></td>
+                                <td>Grado 2°A y 2°B ·</td>
+                                <td>Oscar Villarreal, Joan Cabrera y Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(8)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="primaria-row-9" data-role="actrices" data-search="9 13:32 teatro — escena ii: el trabajador social lilo · nani · trabajador social señor bubbles ana margarita bello entra sr. bubbles en el carro actrices">
+                                <td>9</td>
+                                <td>13:32</td>
+                                <td><strong>Teatro — Escena II: El trabajador social</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Entra Sr. Bubbles en el carro</span></td>
+                                <td>Lilo · Nani · trabajador social Señor Bubbles</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(9)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-acto" id="primaria-row-10" data-role="acto" data-search="10 13:35 video: la captura de stitch conductores · experimento 626 capturado con una red. juanita guerra nada en escena acto">
+                                <td>10</td>
+                                <td>13:35</td>
+                                <td><strong>Video: La captura de Stitch</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Nada en escena</span></td>
+                                <td>Conductores · Experimento 626 capturado con una red.</td>
+                                <td>Juanita Guerra</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(10)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="primaria-row-11" data-role="actrices" data-search="11 13:36 teatro — escena iii: la adopción vendedora · lilo · nani · mertle - amigas y stitch ana margarita bello tablero de tiza, collar de pompones y tablas de surf actrices">
+                                <td>11</td>
+                                <td>13:36</td>
+                                <td><strong>Teatro — Escena III: La adopción</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablero de tiza, collar de pompones y tablas de surf</span></td>
+                                <td>Vendedora · Lilo · Nani · Mertle - Amigas y Stitch</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(11)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="primaria-row-12" data-role="musica" data-search="12 13:38 música: stuck on you (elvis presley) grado 3°a · con dios kāne (5°a y 5°b) oscar villarreal, joan cabrera y orlando gómez tablas desurf, bajan ukeleles musica">
+                                <td>12</td>
+                                <td>13:38</td>
+                                <td><strong>Música: Stuck On You (Elvis Presley)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas desurf, bajan ukeleles</span></td>
+                                <td>Grado 3°A · con dios Kāne (5°A y 5°B)</td>
+                                <td>Oscar Villarreal, Joan Cabrera y Orlando Gómez</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(12)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="primaria-row-13" data-role="danza" data-search="13 13:41 danza guerrera hawaiana: hula kahiko niños grado 3°a, 4o. ab y 5o. ab ana margarita bello bajan máscaras tiki danza">
+                                <td>13</td>
+                                <td>13:41</td>
+                                <td><strong>Danza Guerrera Hawaiana: Hula Kahiko</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Bajan máscaras Tiki</span></td>
+                                <td>Niños Grado 3°A, 4o. AB y 5o. AB</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(13)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-acto" id="primaria-row-14" data-role="acto" data-search="14 13:47 stop motion: flor de hibisco estudiantes grado 3°a (visuales) juanita guerra nada en escena acto">
+                                <td>14</td>
+                                <td>13:47</td>
+                                <td><strong>Stop Motion: Flor de Hibisco</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Nada en escena</span></td>
+                                <td>Estudiantes Grado 3°A (visuales)</td>
+                                <td>Juanita Guerra</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(14)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="primaria-row-15" data-role="actrices" data-search="15 13:48 teatro — escena iv: ohana nani · lilo · señor bubbles y stitch ana margarita bello tablas de surf, sr. bubbles en el carro actrices">
+                                <td>15</td>
+                                <td>13:48</td>
+                                <td><strong>Teatro — Escena IV: Ohana</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf, Sr. Bubbles en el carro</span></td>
+                                <td>Nani · Lilo · Señor Bubbles y Stitch</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(15)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="primaria-row-16" data-role="danza" data-search="16 13:52 danza: (you're the) devil in disguise (elvis presley) grado 2°a y 2°b leonardo aponte bajan ukeleles danza">
+                                <td>16</td>
+                                <td>13:52</td>
+                                <td><strong>Danza: (You're The) Devil in Disguise (Elvis Presley)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Bajan Ukeleles</span></td>
+                                <td>Grado 2°A y 2°B</td>
+                                <td>Leonardo Aponte</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(16)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="primaria-row-17" data-role="actrices" data-search="17 13:54 teatro — escena v (final): reencuentro nani · lilo · stitch ana margarita bello tablas de surf, bajan máscaras tiki actrices">
+                                <td>17</td>
+                                <td>13:54</td>
+                                <td><strong>Teatro — Escena V (Final): Reencuentro</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf, Bajan máscaras Tiki</span></td>
+                                <td>Nani · Lilo · Stitch</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(17)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="primaria-row-18" data-role="danza" data-search="18 13:57 danza: aloha, e komo mai (lilo & stitch) grado 3°a ana margarita bello tablas de surf danza">
+                                <td>18</td>
+                                <td>13:57</td>
+                                <td><strong>Danza: Aloha, E Komo Mai (Lilo & Stitch)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf</span></td>
+                                <td>Grado 3°A</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(18)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-danza" id="primaria-row-19" data-role="danza" data-search="19 14:01 danza: myshaan – sway (hawaiano) niñas grado 5°a y 5°b ana margarita bello bajan máscaras tiki danza">
+                                <td>19</td>
+                                <td>14:01</td>
+                                <td><strong>Danza: Myshaan – Sway (hawaiano)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Bajan máscaras Tiki</span></td>
+                                <td>Niñas Grado 5°A y 5°B</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(19)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="primaria-row-20" data-role="musica" data-search="20 14:05 música: burning love (elvis presley) grado 4°a y 4°b oscar villarreal y joan cabrera bajan ukeleles musica">
+                                <td>20</td>
+                                <td>14:05</td>
+                                <td><strong>Música: Burning Love (Elvis Presley)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Bajan Ukeleles</span></td>
+                                <td>Grado 4°A y 4°B</td>
+                                <td>Oscar Villarreal y Joan Cabrera</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(20)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-acto" id="primaria-row-21" data-role="acto" data-search="21 14:08 video: procesos todas las asignaturas comunicaciones acto">
+                                <td>21</td>
+                                <td>14:08</td>
+                                <td><strong>Video: Procesos</strong></td>
+                                <td>Todas las asignaturas</td>
+                                <td>Comunicaciones</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(21)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-actrices" id="primaria-row-22" data-role="actrices" data-search="22 14:10 teatro — (sección final) lilo y stitch ana margarita bello tablas de surf actrices">
+                                <td>22</td>
+                                <td>14:10</td>
+                                <td><strong>Teatro — (sección final)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf</span></td>
+                                <td>Lilo y Stitch</td>
+                                <td>Ana Margarita Bello</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(22)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-musica" id="primaria-row-23" data-role="musica" data-search="23 14:11 música gran final: ohana (lilo & stitch end credits) grado 5°a y 5°b oscar villarreal y joan cabrera tablas de surf y video de hibisco musica">
+                                <td>23</td>
+                                <td>14:11</td>
+                                <td><strong>Música Gran Final: Ohana (Lilo & Stitch End Credits)</strong><br><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;"><i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 4px; color: #94a3b8;"></i>Utilería: Tablas de surf y VIDEO DE HIBISCO</span></td>
+                                <td>Grado 5°A y 5°B</td>
+                                <td>Oscar Villarreal y Joan Cabrera</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(23)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="primaria-row-24" data-role="protocolo" data-search="24 14:14 palabras de cierre coordinación / docente directora de sección coordinación protocolo">
+                                <td>24</td>
+                                <td>14:14</td>
+                                <td><strong>Palabras de cierre</strong></td>
+                                <td>Coordinación / docente directora de sección</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(24)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="primaria-row-25" data-role="protocolo" data-search="25 14:17 entrega de diplomas y constancias estudiantes primaria · felipe palacios · directoras de grupo coordinación protocolo">
+                                <td>25</td>
+                                <td>14:17</td>
+                                <td><strong>Entrega de diplomas y constancias</strong></td>
+                                <td>Estudiantes Primaria · Felipe Palacios · directoras de grupo</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(25)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            <tr class="minuto-row row-protocolo" id="primaria-row-26" data-role="protocolo" data-search="26 14:32 fotografía grupal y compartir toda la comunidad ciedi coordinación protocolo">
+                                <td>26</td>
+                                <td>14:32</td>
+                                <td><strong>Fotografía grupal y compartir</strong></td>
+                                <td>Toda la comunidad CIEDI</td>
+                                <td>Coordinación</td>
+                                <td>
+                                    <button class="btn-live-track" onclick="setLivePrimariaActividad(26)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                                    <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Vista Cards (Móvil) -->
+                    <div class="minuto-cards-view" id="minutoPrimariaCardsContainer">
+                    <div class="minuto-card card-protocolo" id="primaria-card-1" data-role="protocolo" data-search="1 13:00 bienvenida familias, estudiantes y docentes coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">13:00</span>
+                            <span class="card-number">Actividad #1</span>
+                        </div>
+                        <h3 class="card-title">Bienvenida</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Familias, estudiantes y docentes</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(1)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="primaria-card-2" data-role="protocolo" data-search="2 13:10 himno nacional de colombia toda la comunidad ciedi coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">13:10</span>
+                            <span class="card-number">Actividad #2</span>
+                        </div>
+                        <h3 class="card-title">Himno Nacional de Colombia</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Toda la comunidad CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(2)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="primaria-card-3" data-role="protocolo" data-search="3 13:13 himno del colegio ciedi toda la comunidad ciedi coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">13:13</span>
+                            <span class="card-number">Actividad #3</span>
+                        </div>
+                        <h3 class="card-title">Himno del Colegio CIEDI</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Toda la comunidad CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(3)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="primaria-card-4" data-role="protocolo" data-search="4 13:16 palabras de bienvenida del rector felipe palacios — rector ciedi coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">13:16</span>
+                            <span class="card-number">Actividad #4</span>
+                        </div>
+                        <h3 class="card-title">Palabras de bienvenida del Rector</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Felipe Palacios — Rector CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(4)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-acto" id="primaria-card-5" data-role="acto" data-search="5 13:21 stop motion: experimento 626 (stitch en su nave) estudiantes grado 3°a (visuales) juanita guerra entra stitch en la nave al sonar la explosión acto">
+                        <div class="card-time-row">
+                            <span class="card-time">13:21</span>
+                            <span class="card-number">Actividad #5</span>
+                        </div>
+                        <h3 class="card-title">Stop Motion: Experimento 626 (Stitch en su nave)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes Grado 3°A (visuales)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Juanita Guerra</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Entra stitch en la nave al sonar la explosión</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(5)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="primaria-card-6" data-role="danza" data-search="6 13:23 danza hula: hawaiian roller coaster ride niñas grado 4°a y 4°b ana margarita bello tablas de surf danza">
+                        <div class="card-time-row">
+                            <span class="card-time">13:23</span>
+                            <span class="card-number">Actividad #6</span>
+                        </div>
+                        <h3 class="card-title">Danza Hula: Hawaiian Roller Coaster Ride</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Niñas Grado 4°A y 4°B</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(6)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="primaria-card-7" data-role="actrices" data-search="7 13:27 teatro — escena i: lilo en clase lilo · profesor · 4 compañeras ana margarita bello tablas de surf actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">13:27</span>
+                            <span class="card-number">Actividad #7</span>
+                        </div>
+                        <h3 class="card-title">Teatro — Escena I: Lilo en clase</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Lilo · profesor · 4 compañeras</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(7)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="primaria-card-8" data-role="musica" data-search="8 13:30 música: heartbreak hotel (elvis presley) grado 2°a y 2°b · oscar villarreal, joan cabrera y orlando gómez bajan ukeleles musica">
+                        <div class="card-time-row">
+                            <span class="card-time">13:30</span>
+                            <span class="card-number">Actividad #8</span>
+                        </div>
+                        <h3 class="card-title">Música: Heartbreak Hotel (Elvis Presley)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grado 2°A y 2°B ·</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal, Joan Cabrera y Orlando Gómez</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Bajan Ukeleles</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(8)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="primaria-card-9" data-role="actrices" data-search="9 13:32 teatro — escena ii: el trabajador social lilo · nani · trabajador social señor bubbles ana margarita bello entra sr. bubbles en el carro actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">13:32</span>
+                            <span class="card-number">Actividad #9</span>
+                        </div>
+                        <h3 class="card-title">Teatro — Escena II: El trabajador social</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Lilo · Nani · trabajador social Señor Bubbles</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Entra Sr. Bubbles en el carro</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(9)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-acto" id="primaria-card-10" data-role="acto" data-search="10 13:35 video: la captura de stitch conductores · experimento 626 capturado con una red. juanita guerra nada en escena acto">
+                        <div class="card-time-row">
+                            <span class="card-time">13:35</span>
+                            <span class="card-number">Actividad #10</span>
+                        </div>
+                        <h3 class="card-title">Video: La captura de Stitch</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Conductores · Experimento 626 capturado con una red.</div>
+                        <div class="card-field"><strong>Responsable:</strong> Juanita Guerra</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Nada en escena</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(10)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="primaria-card-11" data-role="actrices" data-search="11 13:36 teatro — escena iii: la adopción vendedora · lilo · nani · mertle - amigas y stitch ana margarita bello tablero de tiza, collar de pompones y tablas de surf actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">13:36</span>
+                            <span class="card-number">Actividad #11</span>
+                        </div>
+                        <h3 class="card-title">Teatro — Escena III: La adopción</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Vendedora · Lilo · Nani · Mertle - Amigas y Stitch</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablero de tiza, collar de pompones y tablas de surf</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(11)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="primaria-card-12" data-role="musica" data-search="12 13:38 música: stuck on you (elvis presley) grado 3°a · con dios kāne (5°a y 5°b) oscar villarreal, joan cabrera y orlando gómez tablas desurf, bajan ukeleles musica">
+                        <div class="card-time-row">
+                            <span class="card-time">13:38</span>
+                            <span class="card-number">Actividad #12</span>
+                        </div>
+                        <h3 class="card-title">Música: Stuck On You (Elvis Presley)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grado 3°A · con dios Kāne (5°A y 5°B)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal, Joan Cabrera y Orlando Gómez</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas desurf, bajan ukeleles</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(12)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="primaria-card-13" data-role="danza" data-search="13 13:41 danza guerrera hawaiana: hula kahiko niños grado 3°a, 4o. ab y 5o. ab ana margarita bello bajan máscaras tiki danza">
+                        <div class="card-time-row">
+                            <span class="card-time">13:41</span>
+                            <span class="card-number">Actividad #13</span>
+                        </div>
+                        <h3 class="card-title">Danza Guerrera Hawaiana: Hula Kahiko</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Niños Grado 3°A, 4o. AB y 5o. AB</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Bajan máscaras Tiki</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(13)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-acto" id="primaria-card-14" data-role="acto" data-search="14 13:47 stop motion: flor de hibisco estudiantes grado 3°a (visuales) juanita guerra nada en escena acto">
+                        <div class="card-time-row">
+                            <span class="card-time">13:47</span>
+                            <span class="card-number">Actividad #14</span>
+                        </div>
+                        <h3 class="card-title">Stop Motion: Flor de Hibisco</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes Grado 3°A (visuales)</div>
+                        <div class="card-field"><strong>Responsable:</strong> Juanita Guerra</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Nada en escena</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(14)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="primaria-card-15" data-role="actrices" data-search="15 13:48 teatro — escena iv: ohana nani · lilo · señor bubbles y stitch ana margarita bello tablas de surf, sr. bubbles en el carro actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">13:48</span>
+                            <span class="card-number">Actividad #15</span>
+                        </div>
+                        <h3 class="card-title">Teatro — Escena IV: Ohana</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Nani · Lilo · Señor Bubbles y Stitch</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf, Sr. Bubbles en el carro</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(15)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="primaria-card-16" data-role="danza" data-search="16 13:52 danza: (you're the) devil in disguise (elvis presley) grado 2°a y 2°b leonardo aponte bajan ukeleles danza">
+                        <div class="card-time-row">
+                            <span class="card-time">13:52</span>
+                            <span class="card-number">Actividad #16</span>
+                        </div>
+                        <h3 class="card-title">Danza: (You're The) Devil in Disguise (Elvis Presley)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grado 2°A y 2°B</div>
+                        <div class="card-field"><strong>Responsable:</strong> Leonardo Aponte</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Bajan Ukeleles</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(16)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="primaria-card-17" data-role="actrices" data-search="17 13:54 teatro — escena v (final): reencuentro nani · lilo · stitch ana margarita bello tablas de surf, bajan máscaras tiki actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">13:54</span>
+                            <span class="card-number">Actividad #17</span>
+                        </div>
+                        <h3 class="card-title">Teatro — Escena V (Final): Reencuentro</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Nani · Lilo · Stitch</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf, Bajan máscaras Tiki</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(17)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="primaria-card-18" data-role="danza" data-search="18 13:57 danza: aloha, e komo mai (lilo & stitch) grado 3°a ana margarita bello tablas de surf danza">
+                        <div class="card-time-row">
+                            <span class="card-time">13:57</span>
+                            <span class="card-number">Actividad #18</span>
+                        </div>
+                        <h3 class="card-title">Danza: Aloha, E Komo Mai (Lilo & Stitch)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grado 3°A</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(18)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-danza" id="primaria-card-19" data-role="danza" data-search="19 14:01 danza: myshaan – sway (hawaiano) niñas grado 5°a y 5°b ana margarita bello bajan máscaras tiki danza">
+                        <div class="card-time-row">
+                            <span class="card-time">14:01</span>
+                            <span class="card-number">Actividad #19</span>
+                        </div>
+                        <h3 class="card-title">Danza: Myshaan – Sway (hawaiano)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Niñas Grado 5°A y 5°B</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Bajan máscaras Tiki</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(19)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="primaria-card-20" data-role="musica" data-search="20 14:05 música: burning love (elvis presley) grado 4°a y 4°b oscar villarreal y joan cabrera bajan ukeleles musica">
+                        <div class="card-time-row">
+                            <span class="card-time">14:05</span>
+                            <span class="card-number">Actividad #20</span>
+                        </div>
+                        <h3 class="card-title">Música: Burning Love (Elvis Presley)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grado 4°A y 4°B</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal y Joan Cabrera</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Bajan Ukeleles</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(20)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-acto" id="primaria-card-21" data-role="acto" data-search="21 14:08 video: procesos todas las asignaturas comunicaciones acto">
+                        <div class="card-time-row">
+                            <span class="card-time">14:08</span>
+                            <span class="card-number">Actividad #21</span>
+                        </div>
+                        <h3 class="card-title">Video: Procesos</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Todas las asignaturas</div>
+                        <div class="card-field"><strong>Responsable:</strong> Comunicaciones</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(21)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-actrices" id="primaria-card-22" data-role="actrices" data-search="22 14:10 teatro — (sección final) lilo y stitch ana margarita bello tablas de surf actrices">
+                        <div class="card-time-row">
+                            <span class="card-time">14:10</span>
+                            <span class="card-number">Actividad #22</span>
+                        </div>
+                        <h3 class="card-title">Teatro — (sección final)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Lilo y Stitch</div>
+                        <div class="card-field"><strong>Responsable:</strong> Ana Margarita Bello</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(22)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-musica" id="primaria-card-23" data-role="musica" data-search="23 14:11 música gran final: ohana (lilo & stitch end credits) grado 5°a y 5°b oscar villarreal y joan cabrera tablas de surf y video de hibisco musica">
+                        <div class="card-time-row">
+                            <span class="card-time">14:11</span>
+                            <span class="card-number">Actividad #23</span>
+                        </div>
+                        <h3 class="card-title">Música Gran Final: Ohana (Lilo & Stitch End Credits)</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Grado 5°A y 5°B</div>
+                        <div class="card-field"><strong>Responsable:</strong> Oscar Villarreal y Joan Cabrera</div>
+                        <div class="card-field"><strong>Utilería / Obs:</strong> Tablas de surf y VIDEO DE HIBISCO</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(23)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="primaria-card-24" data-role="protocolo" data-search="24 14:14 palabras de cierre coordinación / docente directora de sección coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">14:14</span>
+                            <span class="card-number">Actividad #24</span>
+                        </div>
+                        <h3 class="card-title">Palabras de cierre</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Coordinación / docente directora de sección</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(24)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="primaria-card-25" data-role="protocolo" data-search="25 14:17 entrega de diplomas y constancias estudiantes primaria · felipe palacios · directoras de grupo coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">14:17</span>
+                            <span class="card-number">Actividad #25</span>
+                        </div>
+                        <h3 class="card-title">Entrega de diplomas y constancias</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Estudiantes Primaria · Felipe Palacios · directoras de grupo</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(25)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    <div class="minuto-card card-protocolo" id="primaria-card-26" data-role="protocolo" data-search="26 14:32 fotografía grupal y compartir toda la comunidad ciedi coordinación protocolo">
+                        <div class="card-time-row">
+                            <span class="card-time">14:32</span>
+                            <span class="card-number">Actividad #26</span>
+                        </div>
+                        <h3 class="card-title">Fotografía grupal y compartir</h3>
+                        <div class="card-field"><strong>Intervienen:</strong> Toda la comunidad CIEDI</div>
+                        <div class="card-field"><strong>Responsable:</strong> Coordinación</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                            <button class="btn-live-track" onclick="setLivePrimariaActividad(26)"><i class="fa-solid fa-play"></i> En Vivo</button>
+                            <span class="live-badge"><i class="fa-solid fa-satellite-dish"></i> En Vivo</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
