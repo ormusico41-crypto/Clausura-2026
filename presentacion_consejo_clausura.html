@@ -2318,9 +2318,14 @@
         }
 
         // Cerrar al hacer clic fuera del modal
-        document.getElementById('studentModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentModal = document.getElementById('studentModal');
+            if (studentModal) {
+                studentModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal();
+                    }
+                });
             }
         });
 
